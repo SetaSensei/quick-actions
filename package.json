@@ -1,0 +1,22 @@
+{
+  "name": "quick-actions",
+  "version": "1.0.0",
+  "description": "![](https://img.shields.io/badge/Foundry-v0.7.9-informational) <!--- Downloads @ Latest Badge --> <!--- replace <user>/<repo> with your username/repository --> <!--- ![Latest Release Download Count](https://img.shields.io/github/downloads/<user>/<repo>/latest/module.zip) -->",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SetaSensei/quick-actions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SetaSensei/quick-actions/issues"
+  },
+  "homepage": "https://github.com/SetaSensei/quick-actions#readme",
+  "dependencies": {
+    "jsonata": "^1.8.4"
+  }
+}
