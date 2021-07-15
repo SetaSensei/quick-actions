@@ -114,7 +114,7 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
 
     dice.d20Roll({
         parts: d.parts,
-        critical: 2,
+        critical: 20,
         data: d.rollData,
         rollMode: rollMode,
         advantage: advMode == "advantage",
