@@ -1,3 +1,5 @@
+
+
 ![](https://img.shields.io/badge/Foundry-v0.8.8-informational)
 <!--- Downloads @ Latest Badge -->
 <!--- replace <user>/<repo> with your username/repository -->
@@ -11,6 +13,8 @@
 # Quick Actions
 
 Quickly launch an attack or a spell from the character's spreadsheet.
+
+https://user-images.githubusercontent.com/8818232/125848025-e204724c-abb6-4a7f-bf52-c942dbc246fc.mp4
 
 ## Changelog
 
