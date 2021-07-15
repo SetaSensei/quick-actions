@@ -1,6 +1,7 @@
 import * as dice from '../../../systems/dnd5e/module/dice.js'
 
 CONFIG.debug.hooks = true
+
 var advMode = "normal"
 var rollMode = "publicroll"
 var player = null
@@ -50,7 +51,7 @@ async function _quickRollAttack(event) {
             buttons: {
                 one: {
                     icon: '<i class="fas fa-check"></i>',
-                    label: "Ok",
+                    label: game.i18n.localize("QACT.OK"),
                     callback: (event) => {
                         currentLevel = event.find("select[data-name='spellupcast']").val()
                         _sendRoll(actor, attackEntity, currentLevel)
@@ -58,13 +59,13 @@ async function _quickRollAttack(event) {
                 },
                 two: {
                     icon: '<i class="fas fa-times"></i>',
-                    label: "Cancel",
+                    label: game.i18n.localize("QACT.Cancel"),
                     callback: () => console.log("Chose Two")
                 }
             },
             default: "two",
             render: html => console.log("Register interactivity in the rendered dialog"),
-            close: html => console.log("This always is logged no matter which option is chosen")
+            close: html => console.log("Cancel")
         });
         dialog.render(true);
         return;
@@ -123,46 +124,6 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
         title: attackEntity.name,
         messageData: {},
         flavor: actions
-        //flavor : "<div class='card-button'><button data-action='damage' class='attack-roll' data-actorid = " + actor.id + " data-weaponid=" + weapon.id + ">Damage</button></div>"
-    })
-}
-
-function _quickRoll(event) {
-    console.log(event)
-    var control = event.currentTarget
-
-    var itemid = control.parentNode.dataset.itemid
-
-    var parents = $(control).parentsUntil('.qaction-container')
-
-    var container = parents[parents.length - 1].parentNode
-
-    var actor = game.actors.get(container.dataset.actorid)
-
-    var weapon = actor.data.items.find(i => i._id === itemid)
-
-    var dRoll = dice.damageRoll({
-        parts: [weapon.labels.toHit],
-        data: {}, // Roll creation
-        advantage: true,
-        disadvantage: false,
-        fumble: 1,
-        critical: 20,
-        targetValue: null,
-        elvenAccuracy: false,
-        halflingLucky: false,
-        reliableTalent: null, // Roll customization
-        chooseModifier: false,
-        fastForward: true,
-        event: null,
-        template: null,
-        title: "elo",
-        dialogOptions: null, // Dialog configuration
-        chatMessage: true,
-        messageData: {},
-        rollMode: null,
-        speaker: null,
-        flavor: "<button data-action='attack'>Attack</button>" // Chat Message customization
     })
 }
 
@@ -208,7 +169,7 @@ Hooks.once('ready', async function () {
 });
 
 Hooks.on('renderActorSheet5e', async (app, html, data) => {
-    player = data.options.token.data.actorId
+    player = data.actor._id
 
     var weapons = []
     var spellbook = data.spellbook
@@ -217,13 +178,19 @@ Hooks.on('renderActorSheet5e', async (app, html, data) => {
         data.advmode = "normal"
     }
 
-    data.inventory.forEach(item => {
-        if (item.label === 'DND5E.ItemTypeWeaponPl') {
-            weapons = item.items
-        }
-    });
-
-
+    if (data.actor.type == "character") {
+        data.inventory.forEach(item => {
+            if (item.label === 'DND5E.ItemTypeWeaponPl') {
+                weapons = item.items
+            }
+        });
+    } else if (data.actor.type == "npc") {
+        data.features.forEach(feat => {
+            if (feat.label === 'Attacks') {
+                weapons = feat.items
+            }
+        });
+    }
 
     addActionsTab(app, html, {
         "weapons": weapons,
@@ -234,9 +201,6 @@ Hooks.on('renderActorSheet5e', async (app, html, data) => {
         "advantage": data.advmode == "advantage",
         "public": data.mode = "public"
     })
-
-
-
 })
 
 Hooks.on('renderChatMessage', async (app, html, data) => {
@@ -245,5 +209,5 @@ Hooks.on('renderChatMessage', async (app, html, data) => {
 
     if (atk.length == 0)
         return
-    atk.on('click', { isCrit : hasCritical != null } ,rollAttack)
+    atk.on('click', { isCrit : hasCritical.length > 0 } ,rollAttack)
 })
