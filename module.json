@@ -32,12 +32,6 @@
             "path": "languages/en.json"
         }
     ],
-    "templates" : [
-        "/template/actions.hbs",
-        "/template/roll.hbs",
-        "/template/spell-damage-only.hbs",
-        "/template/spell-dialog.hbs"
-    ],
     "url": "https://github.com/SetaSensei/quick-actions",
     "manifest": "https://github.com/SetaSensei/quick-actions/releases/latest/download/module.json",
     "download": "https://github.com/SetaSensei/quick-actions/releases/download/0.0.4/module.zip",
