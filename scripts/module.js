@@ -1,6 +1,6 @@
 import * as dice from '../../../systems/dnd5e/module/dice.js'
 
-CONFIG.debug.hooks = true
+CONFIG.debug.hooks = false
 
 var advMode = "normal"
 var rollMode = "publicroll"

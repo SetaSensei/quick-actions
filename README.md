@@ -21,3 +21,7 @@ Quickly launch an attack or a spell from the character's spreadsheet.
 * Allow Quick Actions to work on NPCs sheets
 * Filter out non-combat items & spells
 * Add race & spec rolls (lucky, ...)
+
+## Known bugs
+
+* Displaying player's name instead of character's name on attack roll
