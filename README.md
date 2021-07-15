@@ -20,4 +20,4 @@ Quickly launch an attack or a spell from the character's spreadsheet.
 
 * Allow Quick Action to work on NPCs sheets
 * Filter out non-combat items & spells
-* Add rece & spec rolls (lucky, ...)
+* Add race & spec rolls (lucky, ...)
