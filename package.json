@@ -18,5 +18,8 @@
   "homepage": "https://github.com/SetaSensei/quick-actions#readme",
   "dependencies": {
     "jsonata": "^1.8.4"
+  },
+  "devDependencies": {
+    "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types"
   }
 }

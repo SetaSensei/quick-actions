@@ -1,0 +1,17 @@
+<div class='card-button'>
+    <div class="dnd5e chat-card item-card">
+        <header class="card-header flexrow">
+            <img src="{{ img }}" title="{{ title }}" width="36" height="36">
+            <h3 class="item-name">{{ title }}</h3>
+        </header>
+
+        <div class="card-content">
+            {{{ description }}}
+        </div>
+
+        <div class="card-buttons">
+            <button data-action='damage' class='attack-roll' data-actorid="{{actor}}" data-weaponid="{{weapon}}"
+                data-spelllevel="{{spellLevel}}">Damage</button>
+        </div>
+    </div>
+</div>

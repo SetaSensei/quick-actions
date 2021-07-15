@@ -1,0 +1,13 @@
+
+<div class="form-group">
+    <div class="form-fields">
+        <label>{{ localize "DND5E.SpellLevel" }}</label>
+        <select data-name="spellupcast" name="level">
+            {{#select item.data.level}}
+            {{#each spellLevels as |l|}}
+            <option value="{{l}}">{{l}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+</div>
