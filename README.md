@@ -8,7 +8,7 @@
 <!--- ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2F<your-module-name>&colorB=4aa94a) -->
 
 
-# Quick Action
+# Quick Actions
 
 Quickly launch an attack or a spell from the character's spreadsheet.
 
@@ -16,8 +16,8 @@ Quickly launch an attack or a spell from the character's spreadsheet.
 
 ### 07/2021 - First version
 
-## TODO
+## Todo
 
-* Allow Quick Action to work on NPCs sheets
+* Allow Quick Actions to work on NPCs sheets
 * Filter out non-combat items & spells
 * Add race & spec rolls (lucky, ...)
