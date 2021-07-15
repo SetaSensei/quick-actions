@@ -1,6 +1,6 @@
 {
-    "name": "quick-action-dev",
-    "title": "Quick Actions dev mode",
+    "name": "quick-action",
+    "title": "Quick Actions",
     "description": "",
     "version": "0.0.4",
     "library": "false",
@@ -9,9 +9,9 @@
     "compatibleCoreVersion": "0.7.9",
     "authors": [
         {
-            "name": "The League of Extraordinary FVTT Developers",
-            "url": "https://github.com/League-of-Foundry-Developers",
-            "discord": "discordID#0001"
+            "name": "SetaSensei",
+            "url": "https://github.com/SetaSensei",
+            "discord": "SetaSensei#1102"
         }
     ],
     "dependencies": [],
