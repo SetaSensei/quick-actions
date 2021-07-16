@@ -2,6 +2,8 @@ import * as dice from '../../../systems/dnd5e/module/dice.js'
 
 CONFIG.debug.hooks = false
 
+const folder = 'modules/quick-actions'
+
 var advMode = "normal"
 var rollMode = "publicroll"
 var player = null
@@ -40,7 +42,7 @@ async function _quickRollAttack(event) {
             spellLevels.push(i)
         }
 
-        var spellcontent = await renderTemplate('modules/quick-action/templates/spell-dialog.hbs', {
+        var spellcontent = await renderTemplate(folder + '/templates/spell-dialog.hbs', {
             item: attackEntity.data,
             spellLevels
         })
@@ -83,7 +85,7 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
 
 
     if (d == null) {
-        var spellDesc = await renderTemplate('modules/quick-action/templates/spell-damage-only.hbs', {
+        var spellDesc = await renderTemplate(folder + '/templates/spell-damage-only.hbs', {
             title: attackEntity.data.name,
             actor: actor.id,
             weapon: attackEntity.id,
@@ -104,7 +106,7 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
         return;
     }
 
-    const actions = await renderTemplate('modules/quick-action/templates/roll.hbs', {
+    const actions = await renderTemplate(folder + '/templates/roll.hbs', {
         title: attackEntity.data.name,
         actor: actor.id,
         weapon: attackEntity.id,
@@ -122,7 +124,11 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
         disadvantage: advMode == "disadvantage",
         fastForward: true,
         title: attackEntity.name,
-        messageData: {},
+        messageData: {
+            speaker: {
+                actor: actor.id
+            }
+        },
         flavor: actions
     })
 }
@@ -135,7 +141,7 @@ async function addActionsTab(app, html, data) {
     const actionsTab = $(`<div class="tab actions flexcol" data-group="primary" data-tab="actions"></div>`);
     sheetBody.prepend(actionsTab);
 
-    const actions = $(await renderTemplate('modules/quick-action/templates/actions.hbs', data))
+    const actions = $(await renderTemplate(folder + '/templates/actions.hbs', data))
     actionsTab.append(actions)
 
     var quickroll = actionsTab.find('div .quick-rollable');
