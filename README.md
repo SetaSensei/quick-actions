@@ -14,7 +14,11 @@
 
 Quickly launch an attack or a spell from the character's spreadsheet.
 
-https://user-images.githubusercontent.com/8818232/125848025-e204724c-abb6-4a7f-bf52-c942dbc246fc.mp4
+
+
+https://user-images.githubusercontent.com/8818232/125952363-f112efa9-ba60-4210-a5b2-a75e486392e1.mp4
+
+
 
 ## Changelog
 
