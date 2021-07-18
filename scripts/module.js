@@ -53,7 +53,7 @@ async function _quickRollAttack(event) {
             buttons: {
                 one: {
                     icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize("QACT.OK"),
+                    label: "OK",
                     callback: (event) => {
                         currentLevel = event.find("select[data-name='spellupcast']").val()
                         _sendRoll(actor, attackEntity, currentLevel)
@@ -61,7 +61,7 @@ async function _quickRollAttack(event) {
                 },
                 two: {
                     icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize("QACT.Cancel"),
+                    label: "Cancel",
                     callback: () => console.log("Chose Two")
                 }
             },

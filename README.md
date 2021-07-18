@@ -22,9 +22,9 @@ https://user-images.githubusercontent.com/8818232/125848025-e204724c-abb6-4a7f-b
 
 ## Todo
 
-* Allow Quick Actions to work on NPCs sheets
 * Filter out non-combat items & spells
 * Add race & spec rolls (lucky, ...)
+* Add special actions (e.g. dragon breath)
 
 ## Known bugs
 
