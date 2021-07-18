@@ -38,7 +38,7 @@ async function _quickRollAttack(event) {
     var currentLevel = 0
 
     if (attackEntity.data._source.type == "spell" && attackEntity.data._source.data.level != 0) {
-        for (let i = attackEntity.data._source.data.level; i < 10; i++) {
+        for (var i = attackEntity.data._source.data.level; i < 10; i++) {
             spellLevels.push(i)
         }
 
@@ -53,7 +53,7 @@ async function _quickRollAttack(event) {
             buttons: {
                 one: {
                     icon: '<i class="fas fa-check"></i>',
-                    label: "OK",
+                    label: game.i18n.localize("QACT.OK"),
                     callback: (event) => {
                         currentLevel = event.find("select[data-name='spellupcast']").val()
                         _sendRoll(actor, attackEntity, currentLevel)
@@ -61,7 +61,7 @@ async function _quickRollAttack(event) {
                 },
                 two: {
                     icon: '<i class="fas fa-times"></i>',
-                    label: "Cancel",
+                    label: game.i18n.localize("QACT.Cancel"),
                     callback: () => console.log("Chose Two")
                 }
             },
@@ -134,11 +134,11 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
 }
 
 async function addActionsTab(app, html, data) {
-    const actionsTabButton = $('<a class="item" data-tab="actions"> Q-Actions </a>');
+    const actionsTabButton = $('<a class="item" data-tab="quick-actions"> Q-Actions </a>');
     const tabs = html.find('.tabs[data-group="primary"]');
     tabs.prepend(actionsTabButton);
     const sheetBody = html.find('.sheet-body');
-    const actionsTab = $(`<div class="tab actions flexcol" data-group="primary" data-tab="actions"></div>`);
+    const actionsTab = $(`<div class="tab actions flexcol" data-group="primary" data-tab="quick-actions"></div>`);
     sheetBody.prepend(actionsTab);
 
     const actions = $(await renderTemplate(folder + '/templates/actions.hbs', data))
@@ -178,22 +178,30 @@ Hooks.on('renderActorSheet5e', async (app, html, data) => {
     player = data.actor._id
 
     var weapons = []
-    var spellbook = data.spellbook
+    var spellbook = []
+    
+    data.spellbook.forEach(spellPage => {
+        var page = { 
+            level: spellPage.order, 
+            label : spellPage.label,
+            spells : spellPage.spells.filter(spell => spell.data.damage.parts.length > 0)}
+        spellbook.push(page)
+    })
 
     if (data.advmode == null) {
         data.advmode = "normal"
     }
 
-    if (data.actor.type == "character") {
-        data.inventory.forEach(item => {
-            if (item.label === 'DND5E.ItemTypeWeaponPl') {
-                weapons = item.items
+    if (data.isCharacter) {
+        data.inventory.forEach(itemList => {
+            if (itemList.label === 'DND5E.ItemTypeWeaponPl') {
+                weapons = _getHasDamages(itemList)
             }
         });
-    } else if (data.actor.type == "npc") {
+    } else if (data.isNPC) {
         data.features.forEach(feat => {
             if (feat.label === 'Attacks') {
-                weapons = feat.items
+                weapons = _getHasDamages(feat)
             }
         });
     }
@@ -217,3 +225,7 @@ Hooks.on('renderChatMessage', async (app, html, data) => {
         return
     atk.on('click', { isCrit : hasCritical.length > 0 } ,rollAttack)
 })
+
+function _getHasDamages(itemList) {
+    return itemList.items.filter(i => i.data.damage.parts.length > 0)
+}
