@@ -44,6 +44,95 @@
             {{/each}}
         </ol>
     </ol>
+
+    {{#if actions.action.hasItems}}
+    <ol class="items-list inventory-list">
+        <li class="items-header flexrow">
+            <h3 class="item-name flexrow">{{ localize "DND5E.ActionPl" }}</h3>
+            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+        </li>
+        <ol class="item-list">
+            {{#each actions.action.items as |action|}}
+            <li class="item flexrow" data-itemid="{{action._id}}">
+                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
+                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
+                    <h4>
+                        {{action.name~}}
+                    </h4>
+                </div>
+                <div class="item-details">{{ action.labels.damageTypes }}</div>
+            </li>
+            {{/each}}
+        </ol>
+    </ol>
+    {{/if}}
+
+    {{#if actions.bonus.hasItems}}
+    <ol class="items-list inventory-list">
+        <li class="items-header flexrow">
+            <h3 class="item-name flexrow">{{ localize "DND5E.BonusAction" }}</h3>
+            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+        </li>
+        <ol class="item-list">
+            {{#each actions.bonus.items as |action|}}
+            <li class="item flexrow" data-itemid="{{action._id}}">
+                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
+                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
+                    <h4>
+                        {{action.name~}}
+                    </h4>
+                </div>
+                <div class="item-details">{{ action.labels.damageTypes }}</div>
+            </li>
+            {{/each}}
+        </ol>
+    </ol>
+    {{/if}}
+
+    {{#if actions.legendary.hasItems}}
+    <ol class="items-list inventory-list">
+        <li class="items-header flexrow">
+            <h3 class="item-name flexrow">{{ localize "DND5E.LegendaryActionLabel" }}</h3>
+            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+        </li>
+        <ol class="item-list">
+            {{#each actions.legendary.items as |action|}}
+            <li class="item flexrow" data-itemid="{{action._id}}">
+                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
+                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
+                    <h4>
+                        {{action.name~}}
+                    </h4>
+                </div>
+                <div class="item-details">{{ action.labels.damageTypes }}</div>
+            </li>
+            {{/each}}
+        </ol>
+    </ol>
+    {{/if}}
+
+    {{#if actions.lair.hasItems}}
+    <ol class="items-list inventory-list">
+        <li class="items-header flexrow">
+            <h3 class="item-name flexrow">{{ localize "DND5E.LairActionLabel" }}</h3>
+            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+        </li>
+        <ol class="item-list">
+            {{#each actions.lair.items as |action|}}
+            <li class="item flexrow" data-itemid="{{action._id}}">
+                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
+                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
+                    <h4>
+                        {{action.name~}}
+                    </h4>
+                </div>
+                <div class="item-details">{{ action.labels.damageTypes }}</div>
+            </li>
+            {{/each}}
+        </ol>
+    </ol>
+    {{/if}}
+    
     
     {{#each spellbook as |spellLevel|}}
     <ol class="items-list inventory-list">

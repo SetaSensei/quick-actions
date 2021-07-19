@@ -4,7 +4,9 @@
             <img src="{{ img }}" title="{{ title }}" width="36" height="36">
             <h3 class="item-name">{{ title }}</h3>
         </header>
+        {{#if hasComponents}}
         <span class="flavor-text">({{ spellLevel }} - {{ components }})</span>
+        {{/if}}
         <h2>{{ save }}</h2>
         <div class="card-content">
             {{{ description }}}
