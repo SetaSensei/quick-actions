@@ -28,10 +28,7 @@ https://user-images.githubusercontent.com/8818232/125952363-f112efa9-ba60-4210-a
 
 ## Todo
 
-* Filter out non-combat items & spells
 * Add race & spec rolls (lucky, ...)
-* Add special actions (e.g. dragon breath)
 
 ## Known bugs
 
-* Displaying player's name instead of character's name on attack roll
