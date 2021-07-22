@@ -2,7 +2,7 @@
     "name": "quick-actions",
     "title": "Quick Actions",
     "description": "",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "library": "false",
     "manifestPlusVersion": "1.0.0",
     "minimumCoreVersion": "0.8.0",

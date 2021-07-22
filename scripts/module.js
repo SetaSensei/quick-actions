@@ -34,46 +34,58 @@ async function _quickRollAttack(event) {
     var attackEntity = actor.data.items.find(i => i.id === itemid)
 
     var spellLevels = []
-
     var currentLevel = 0
 
-    if (attackEntity.data._source.type == "spell" && attackEntity.data._source.data.level != 0) {
-        for (var i = attackEntity.data._source.data.level; i < 10; i++) {
-            spellLevels.push(i)
-        }
-
-        var spellcontent = await renderTemplate(folder + '/templates/spell-dialog.hbs', {
-            item: attackEntity.data,
-            spellLevels
-        })
-
-        var dialog = new Dialog({
-            title: game.i18n.localize("DND5E.SpellCastUpcast"),
-            content: spellcontent,
-            buttons: {
-                one: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize("QACT.OK"),
-                    callback: (event) => {
-                        currentLevel = event.find("select[data-name='spellupcast']").val()
-                        _sendRoll(actor, attackEntity, currentLevel)
-                    }
-                },
-                two: {
-                    icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize("QACT.Cancel"),
-                    callback: () => console.log("Chose Two")
-                }
-            },
-            default: "two",
-            render: html => console.log("Register interactivity in the rendered dialog"),
-            close: html => console.log("Cancel")
-        });
-        dialog.render(true);
+    if (_hasSpellLevels(attackEntity, actor)) {
+        currentLevel = await _setSpellLevel(attackEntity, actor, spellLevels, currentLevel)
         return;
     } else {
         _sendRoll(actor, attackEntity, currentLevel)
     }
+}
+
+function _hasSpellLevels(attackEntity, actor) {
+    return attackEntity.data._source.type == "spell" && attackEntity.data._source.data.level != 0 && actor.data.data.spells.pact.max == 0
+}
+
+async function _setSpellLevel(attackEntity, actor, spellLevels, currentLevel) {
+    for (var i = attackEntity.data._source.data.level; i < 10; i++) {
+        console.log(actor.data.data.spells['spell' + i])
+        var spell = actor.data.data.spells['spell' + i]
+        if (spell.max > 0) {
+            spellLevels.push({ level: i, label: game.i18n.format('DND5E.SpellLevelSlot', { level: CONFIG.DND5E.spellLevels[i], n: spell.max }) })
+        }
+    }
+
+    var spellcontent = await renderTemplate(folder + '/templates/spell-dialog.hbs', {
+        item: attackEntity.data,
+        spellLevels
+    })
+
+    var dialog = new Dialog({
+        title: attackEntity.data.name + " : " + game.i18n.localize("DND5E.AbilityUseCast"),
+        content: spellcontent,
+        buttons: {
+            one: {
+                icon: '<i class="fas fa-check"></i>',
+                label: game.i18n.localize("QACT.OK"),
+                callback: (event) => {
+                    currentLevel = event.find("select[data-name='spellupcast']").val()
+                    _sendRoll(actor, attackEntity, currentLevel)
+                }
+            },
+            two: {
+                icon: '<i class="fas fa-times"></i>',
+                label: game.i18n.localize("QACT.Cancel"),
+                callback: () => console.log("Chose Two")
+            }
+        },
+        default: "two",
+        render: html => console.log("Register interactivity in the rendered dialog"),
+        close: html => console.log("Cancel")
+    })
+    dialog.render(true)
+    return currentLevel
 }
 
 async function _sendRoll(actor, attackEntity, currentLevel = 0) {
@@ -89,34 +101,16 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
             description: attackEntity.data.data.description.value,
             spellLevel: attackEntity.labels.level,
             save: attackEntity.labels.save,
-            hasComponents : components.length > 0,
+            hasComponents: components.length > 0,
             components: components.join(',')
         })
 
         await ChatMessage.create({
-            speaker: {actor: actor._id},
+            speaker: {
+                actor: actor._id
+            },
             content: spellDesc
         })
-
-
-        // console.log("No Damage")
-
-        // var components = (attackEntity.labels.components || [])
-
-        // var spellDesc = await renderTemplate(folder + '/templates/spell-damage-only.hbs', {
-        //     title: attackEntity.data.name,
-        //     actor: actor.id,
-        //     weapon: attackEntity.id,
-        //     img: attackEntity.data.img,
-        //     description: attackEntity.data.data.description.value,
-        //     spellLevel: attackEntity.labels.level,
-        //     save: attackEntity.labels.save,
-        //     hasComponents : components.length > 0,
-        //     components: components.join(',')
-        // })
-
-        // game.messages.postOne(spellDesc)
-
         return
     }
 
@@ -134,7 +128,7 @@ async function _sendRoll(actor, attackEntity, currentLevel = 0) {
             description: attackEntity.data.data.description.value,
             spellLevel: attackEntity.labels.level,
             save: attackEntity.labels.save,
-            hasComponents : components.length > 0,
+            hasComponents: components.length > 0,
             components: components.join(',')
         })
 
@@ -208,14 +202,6 @@ function rollAttack(event) {
     })
 }
 
-// Hooks.once('init', async function () {
-//     console.log('Initializing ...')
-// });
-
-// Hooks.once('ready', async function () {
-//     console.log('Readying ...')
-// });
-
 Hooks.on('renderActorSheet5e', async (app, html, data) => {
     player = data.actor._id
 
@@ -264,18 +250,29 @@ Hooks.on('renderActorSheet5e', async (app, html, data) => {
             arr[key].items.push(curr)
         }
         return arr
-    }, 
-    {
-        action: { hasItems : false, items : [] },
-        bonus: { hasItems : false, items : [] },
-        lair: { hasItems : false, items : [] },
-        legendary: { hasItems : false, items : [] },
+    }, {
+        action: {
+            hasItems: false,
+            items: []
+        },
+        bonus: {
+            hasItems: false,
+            items: []
+        },
+        lair: {
+            hasItems: false,
+            items: []
+        },
+        legendary: {
+            hasItems: false,
+            items: []
+        },
     })
 
     addActionsTab(app, html, {
         "weapons": weapons,
         "spellbook": spellbook,
-        "actions" : actions,
+        "actions": actions,
         "actorId": player,
         "disadvantage": data.advmode == "disadvantage",
         "normal": data.advmode == "normal",
