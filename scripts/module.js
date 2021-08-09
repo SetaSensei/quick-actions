@@ -6,17 +6,32 @@ const folder = 'modules/quick-actions'
 
 var advMode = "normal"
 var rollMode = "publicroll"
-var player = null
+var activate = false
+
+function _toggleEffect(event) {
+    activate = true
+    var actor = _getActor(event)
+    const effect = actor.effects.get(event.currentTarget.dataset.effect)
+    effect.update({
+        disabled: !effect.data.disabled
+    })
+}
+
+function _getActor(event) {
+    var actorId = $(event.currentTarget).parentsUntil('.qaction-container').last().parent().data('actorid')
+    var actor = game.actors.get(actorId)
+    return actor
+}
 
 function _setRollMode(event) {
     rollMode = _updateToggleUI(event, ".roll-mod")
-    var actor = game.actors.get(player)
+    var actor = _getActor(event)
     actor.rollMode = rollMode
 }
 
 function _setAdvMode(event) {
     advMode = _updateToggleUI(event, ".adv-mode")
-    var actor = game.actors.get(player)
+    var actor = _getActor(event)
     actor.advMode = advMode
 }
 
@@ -30,7 +45,7 @@ function _updateToggleUI(event, className) {
 async function _quickRollAttack(event) {
     var control = event.currentTarget
     var itemid = control.parentNode.dataset.itemid
-    var actor = game.actors.get(player)
+    var actor = _getActor(event)
     var attackEntity = actor.data.items.find(i => i.id === itemid)
 
     var spellLevels = []
@@ -53,7 +68,13 @@ async function _setSpellLevel(attackEntity, actor, spellLevels, currentLevel) {
         console.log(actor.data.data.spells['spell' + i])
         var spell = actor.data.data.spells['spell' + i]
         if (spell.max > 0) {
-            spellLevels.push({ level: i, label: game.i18n.format('DND5E.SpellLevelSlot', { level: CONFIG.DND5E.spellLevels[i], n: spell.max }) })
+            spellLevels.push({
+                level: i,
+                label: game.i18n.format('DND5E.SpellLevelSlot', {
+                    level: CONFIG.DND5E.spellLevels[i],
+                    n: spell.max
+                })
+            })
         }
     }
 
@@ -188,6 +209,14 @@ async function addActionsTab(app, html, data) {
 
     var mods = actionsTab.find('.roll-mod');
     mods.on('click', event => _setRollMode(event))
+
+    var effects = actionsTab.find('.effect-control')
+    effects.on('click', event => _toggleEffect(event))
+
+    if (activate) {
+        activate = false
+        app._tabs[0].activate('quick-actions')
+    }
 }
 
 function rollAttack(event) {
@@ -203,7 +232,8 @@ function rollAttack(event) {
 }
 
 Hooks.on('renderActorSheet5e', async (app, html, data) => {
-    player = data.actor._id
+    var actor = game.actors.get(data.actor._id)
+    var effects = actor.effects
 
     var weapons = []
     var actions = []
@@ -273,7 +303,8 @@ Hooks.on('renderActorSheet5e', async (app, html, data) => {
         "weapons": weapons,
         "spellbook": spellbook,
         "actions": actions,
-        "actorId": player,
+        "effects": effects,
+        "actorid": data.actor._id,
         "disadvantage": data.advmode == "disadvantage",
         "normal": data.advmode == "normal",
         "advantage": data.advmode == "advantage",

@@ -1,10 +1,12 @@
-<div class="qaction-container" data-actorId="{{actorId}}">
+<div class="qaction-container" data-actorId="{{actorid}}">
     <div class="flexrow">
         <ul class="q-a-toggler-container flexrow">
             {{#if disadvantage}}
-            <li id="q-a-disa" data-value="disadvantage" class="adv-mode q-a-toggler active">{{localize "DND5E.Disadvantage"}}</li>
+            <li id="q-a-disa" data-value="disadvantage" class="adv-mode q-a-toggler active">
+                {{localize "DND5E.Disadvantage"}}</li>
             {{else}}
-            <li id="q-a-disa" data-value="disadvantage" class="adv-mode q-a-toggler">{{localize "DND5E.Disadvantage"}}</li>
+            <li id="q-a-disa" data-value="disadvantage" class="adv-mode q-a-toggler">{{localize "DND5E.Disadvantage"}}
+            </li>
             {{/if}}
             {{#if normal}}
             <li id="q-a-norma" data-value="normal" class="adv-mode q-a-toggler active">{{localize "DND5E.Normal"}}</li>
@@ -12,147 +14,186 @@
             <li id="q-a-norma" data-value="normal" class="adv-mode q-a-toggler">{{localize "DND5E.Normal"}}</li>
             {{/if}}
             {{#if advantage}}
-            <li id="q-a-adva" data-value="advantage" class="adv-mode q-a-toggler active">{{localize "DND5E.Advantage"}}</li>
+            <li id="q-a-adva" data-value="advantage" class="adv-mode q-a-toggler active">{{localize "DND5E.Advantage"}}
+            </li>
             {{else}}
             <li id="q-a-adva" data-value="advantage" class="adv-mode q-a-toggler">{{localize "DND5E.Advantage"}}</li>
             {{/if}}
         </ul>
-        {{!-- <ul class="q-a-toggler-container flexrow">
-            <li class="roll-mod q-a-toggler active" data-value="publicroll">Public</li>
-            <li class="roll-mod q-a-toggler" data-value="gmroll">to GM</li>
-            <li class="roll-mod q-a-toggler" data-value="blindroll">Blind</li>
-            <li class="roll-mod q-a-toggler" data-value="selfroll">Self</li>
-        </ul> --}}
     </div>
 
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ localize "DND5E.ItemTypeWeaponPl" }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each weapons as |weapon|}}
-            <li class="item flexrow" data-itemid="{{weapon._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{weapon.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{weapon.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{weapon.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ weapon.labels.damageTypes }}</div>
-            </li>
-            {{/each}}
-        </ol>
-    </ol>
+    <div style="display: flex;">
+        <ul style="width: 75%; padding: 0;">
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.ItemTypeWeaponPl" }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each weapons as |weapon|}}
+                    <li class="item flexrow" data-itemid="{{weapon._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{weapon.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{weapon.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{weapon.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ weapon.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
 
-    {{#if actions.action.hasItems}}
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ localize "DND5E.ActionPl" }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each actions.action.items as |action|}}
-            <li class="item flexrow" data-itemid="{{action._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{action.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ action.labels.damageTypes }}</div>
-            </li>
-            {{/each}}
-        </ol>
-    </ol>
-    {{/if}}
+            {{#if actions.action.hasItems}}
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.ActionPl" }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each actions.action.items as |action|}}
+                    <li class="item flexrow" data-itemid="{{action._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{action.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{action.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ action.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
+            {{/if}}
 
-    {{#if actions.bonus.hasItems}}
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ localize "DND5E.BonusAction" }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each actions.bonus.items as |action|}}
-            <li class="item flexrow" data-itemid="{{action._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{action.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ action.labels.damageTypes }}</div>
-            </li>
-            {{/each}}
-        </ol>
-    </ol>
-    {{/if}}
+            {{#if actions.bonus.hasItems}}
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.BonusAction" }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each actions.bonus.items as |action|}}
+                    <li class="item flexrow" data-itemid="{{action._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{action.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{action.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ action.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
+            {{/if}}
 
-    {{#if actions.legendary.hasItems}}
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ localize "DND5E.LegendaryActionLabel" }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each actions.legendary.items as |action|}}
-            <li class="item flexrow" data-itemid="{{action._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{action.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ action.labels.damageTypes }}</div>
-            </li>
-            {{/each}}
-        </ol>
-    </ol>
-    {{/if}}
+            {{#if actions.legendary.hasItems}}
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.LegendaryActionLabel" }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each actions.legendary.items as |action|}}
+                    <li class="item flexrow" data-itemid="{{action._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{action.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{action.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ action.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
+            {{/if}}
 
-    {{#if actions.lair.hasItems}}
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ localize "DND5E.LairActionLabel" }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each actions.lair.items as |action|}}
-            <li class="item flexrow" data-itemid="{{action._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{action.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{action.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ action.labels.damageTypes }}</div>
-            </li>
+            {{#if actions.lair.hasItems}}
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.LairActionLabel" }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each actions.lair.items as |action|}}
+                    <li class="item flexrow" data-itemid="{{action._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{action.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{action.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{action.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ action.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
+            {{/if}}
+
+
+            {{#each spellbook as |spellLevel|}}
+            <ol class="items-list inventory-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ spellLevel.label }}</h3>
+                    <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
+                </li>
+                <ol class="item-list">
+                    {{#each spellLevel.spells as |spell|}}
+                    <li class="item flexrow" data-itemid="{{spell._id}}">
+                        <div class="item-name flexrow rollable quick-rollable"
+                            data-proficient="{{spell.data.proficient}}">
+                            <div class="item-image" style="background-image: url('{{spell.img}}'); max-width:2em;">
+                            </div>
+                            <h4>
+                                {{spell.name~}}
+                            </h4>
+                        </div>
+                        <div class="item-details">{{ spell.labels.damageTypes }}</div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
             {{/each}}
-        </ol>
-    </ol>
-    {{/if}}
-    
-    
-    {{#each spellbook as |spellLevel|}}
-    <ol class="items-list inventory-list">
-        <li class="items-header flexrow">
-            <h3 class="item-name flexrow">{{ spellLevel.label }}</h3>
-            <div class="item-details flexrow">{{ localize "DND5E.Damage" }} ({{ localize "DND5E.Type" }})</div>
-        </li>
-        <ol class="item-list">
-            {{#each spellLevel.spells as |spell|}}
-                <li class="item flexrow" data-itemid="{{spell._id}}">
-                <div class="item-name flexrow rollable quick-rollable" data-proficient="{{spell.data.proficient}}">
-                    <div class="item-image" style="background-image: url('{{spell.img}}'); max-width:2em;"></div>
-                    <h4>
-                        {{spell.name~}}
-                    </h4>
-                </div>
-                <div class="item-details">{{ spell.labels.damageTypes }}</div>
-            </li>
-            {{/each}}
-        </ol>
-    </ol>
-    {{/each}}
+        </ul>
+        <ul style="width: 25%; padding: 0;">
+            <ol class="items-list effect-list">
+                <li class="items-header flexrow">
+                    <h3 class="item-name flexrow">{{ localize "DND5E.Effects" }}</h3>
+                </li>
+                <ol class="item-list">
+                    {{#each effects as |effect|}}
+                    <li class="item effect flexrow" {{#if effect.data.disabled}}style="opacity: 0.5;"{{/if}}>
+                        <div class="item-name effect-name flexrow quick-effect">
+                            <div class="item-image"
+                                style="background-image: url('{{effect.data.icon}}'); max-width:2em;">
+                            </div>
+
+                            <h4>
+                                {{effect.data.label~}}
+                            </h4>
+                        </div>
+                        <div class="item-control effect-controls flexrow">
+                            <a class="effect-control" data-action="quick-toggle"
+                                title="{{localize "DND5E.EffectToggle"}}" data-effect="{{effect.data._id}}" data-actorId="{{actorid}}">
+                                <i class="fas {{#if effect.data.disabled}}fa-check{{else}}fa-times{{/if}}"></i>
+                            </a>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </ol>
+        </ul>
+    </div>
 </div>
